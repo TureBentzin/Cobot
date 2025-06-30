@@ -12,8 +12,9 @@ FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y bash && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder /app/target /app
-COPY config.yml /app/config.yml
 COPY docker/run /app/run
 
 ENV COBOT_SECRET_TOKEN_FILE=/run/secrets/cobot_token
