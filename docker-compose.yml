@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  cobot:
+    image: cobot:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    configs:
+      - source: cobot_config
+        target: /app/config.yml
+    secrets:
+      - cobot_token
+    environment:
+      - COBOT_SECRET_TOKEN_FILE=/run/secrets/cobot_token
+    working_dir: /app
+    command: ["/app/run"]
+
+configs:
+  cobot_config:
+    file: ./config.yml
+
+secrets:
+  cobot_token:
+    file: ./secrets/cobot_token
