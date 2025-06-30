@@ -8,4 +8,6 @@ if [ -z "$JAR_FILE" ]; then
   exit 1
 fi
 
+export TOKEN=$(cat "$COBOT_SECRET_TOKEN_FILE")
+
 exec java -jar "$JAR_FILE" --config config.yml

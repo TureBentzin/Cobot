@@ -1,22 +1,35 @@
 package de.tdrstudios;
 
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Ture Bentzin
  * @since 30-06-2025
  */
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Cobot {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class Cobot {
+    @NotNull
+    private static final Logger log = LoggerFactory.getLogger(Cobot.class);
+
+    public static void main(String[] args) {
+        log.info("Starting Cobot...");
+        JDA jda = JDABuilder.createDefault(System.getenv("TOKEN")).build();
+
+        jda.addEventListener(new MessageListener());
+
+        try {
+            jda.awaitReady();
+            log.info("Cobot is ready!");
+        } catch (InterruptedException e) {
+            log.error("Failed to initialize JDA", e);
+            throw new RuntimeException(e);
         }
     }
+
 }

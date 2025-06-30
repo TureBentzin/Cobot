@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Secrets ##ä
+*.secret
+config.yml
